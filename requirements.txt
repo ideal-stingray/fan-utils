@@ -1,0 +1,3 @@
+ao3_api
+ebooklib
+beautifulsoup4
