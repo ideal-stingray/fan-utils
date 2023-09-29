@@ -4,7 +4,7 @@ Scripts I use for tasks like fanwork archival and conversion.  (Well, currently 
 
 ## Installation
 
-There isn't much, assuming you have a command line and a working python 3 install.  You'll need to install the Python dependencies with `pip3 -r requirements.txt`.
+There isn't much, assuming you have a command line and a working python 3 install.  You'll need to install the Python dependencies with `pip3 install -r requirements.txt`.
 
 I use [pandoc](https://pandoc.org/installing.html) for many conversion tasks (for example, converting HTML to LaTeX as step one of typesetting for ficbinding); it's not strictly required, but you may find that installing it makes your life easier.  And it's dead easy to use if you have any familiarity with the command line: the syntax for nearly all pandoc commands is `pandoc -i [name of input file] -o [name of output file]`; pandoc is smart enough to figure out that if your input file ends in `.html` and your output ends in `.tex`, you probably want html -> tex conversion.
 
