@@ -18,14 +18,19 @@ def get_workskin(url):
 def get_chapter_body(chapter_url, chapter_idx):
     html = requests.get(chapter_url).content
     soup = BeautifulSoup(html, features="lxml")
-    for elm in soup.div.find_all(class_ = "chapter preface group"):
-        elm.decompose()  # remove beginning and end notes
+    try:
+        for elm in soup.div.find_all(class_ = "chapter preface group"):
+            elm.decompose()  # remove beginning and end notes
+    except AttributeError:
+        # ...if we haven't got any, then we don't need to remove them, now do we?
+        pass
 
     chapter_body = soup.div.find(role="article")
     chapter_body["id"] = "workskin"
     del chapter_body["role"]
     del chapter_body["class"]
-    chapter_body.find("h3").decompose()
+    if chapter_body.find("h3"):
+        chapter_body.find("h3").decompose()
     return chapter_body
 
 
@@ -45,7 +50,7 @@ def download_work(url):
 
 
 def modify_epub(filename, workskin, chapter_bodies):
-    book = epub.read_epub(filename)
+    book = epub.read_epub(filename, {"ignore_ncx": True})
 
     workskin = epub.EpubItem(
         uid="workskin",
@@ -76,7 +81,7 @@ def modify_epub(filename, workskin, chapter_bodies):
             print(e)
             continue
 
-    epub.write_epub(filename, book)
+    epub.write_epub(filename, book, {"ignore_ncx": True})
 
 
 if __name__ == "__main__":
